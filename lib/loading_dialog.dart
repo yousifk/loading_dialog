@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 enum LoadingDialogStyle { horizontal, vertical }
 
 class LoadingDialog {
-  BuildContext _context;
+  late BuildContext _context;
 
   /// 是否显示
   bool _isShowing = false;
@@ -17,7 +17,7 @@ class LoadingDialog {
   final BuildContext buildContext;
 
   /// loading view
-  final Widget loadingView;
+  final Widget? loadingView;
 
   /// loading的背景色
   final Color backgroundColor;
@@ -29,7 +29,7 @@ class LoadingDialog {
   final barrierDismissible;
 
   /// loading样式
-  final LoadingDialogStyle style;
+  final LoadingDialogStyle? style;
 
   /// dialog width
   final double width;
@@ -59,7 +59,7 @@ class LoadingDialog {
   final double radius;
 
   LoadingDialog({
-    @required this.buildContext,
+    required this.buildContext,
     this.loadingView,
     this.loadingMessage = "Loading...",
     this.backgroundColor = Colors.white,
@@ -143,15 +143,15 @@ class LoadingDialog {
     );
   }
 
-  Widget _buildTextView(LoadingDialogStyle style) {
+  Widget _buildTextView(LoadingDialogStyle? style) {
     return Offstage(
-      offstage: loadingMessage == null,
+      offstage: true,
       child: Padding(
         padding: (style == LoadingDialogStyle.vertical)
             ? EdgeInsets.only(top: padding)
             : EdgeInsets.only(left: padding),
         child: Text(
-          loadingMessage ?? "",
+          loadingMessage,
           style: TextStyle(
             color: textColor,
             fontSize: textSize,
@@ -172,7 +172,7 @@ class _Dialog extends StatelessWidget {
   ///
   /// Typically used in conjunction with [showDialog].
   const _Dialog({
-    Key key,
+    Key? key,
     this.backgroundColor,
     this.elevation,
     this.insetAnimationDuration = const Duration(milliseconds: 100),
@@ -188,7 +188,7 @@ class _Dialog extends StatelessWidget {
   ///
   /// If `null`, [ThemeData.cardColor] is used.
   /// {@endtemplate}
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   /// {@template flutter.material.dialog.elevation}
   /// The z-coordinate of this [_Dialog].
@@ -197,7 +197,7 @@ class _Dialog extends StatelessWidget {
   /// dialog's elevation is 24.0.
   /// {@endtemplate}
   /// {@macro flutter.material.material.elevation}
-  final double elevation;
+  final double? elevation;
 
   /// The duration of the animation to show when the system keyboard intrudes
   /// into the space that the dialog is placed in.
@@ -218,12 +218,12 @@ class _Dialog extends StatelessWidget {
   ///
   /// The default shape is a [RoundedRectangleBorder] with a radius of 2.0.
   /// {@endtemplate}
-  final ShapeBorder shape;
+  final ShapeBorder? shape;
 
   /// The widget below this widget in the tree.
   ///
   /// {@macro flutter.widgets.child}
-  final Widget child;
+  final Widget? child;
 
   // TODO(johnsonmh): Update default dialog border radius to 4.0 to match material spec.
   static const RoundedRectangleBorder _defaultDialogShape =
@@ -269,27 +269,27 @@ class _Dialog extends StatelessWidget {
 /// 修改了show方法
 /// 添加barrierColor改变透明背景的颜色
 ///
-Future<T> showLoadingDialog<T>({
-  @required
+Future<T?> showLoadingDialog<T>({
+  required
       BuildContext context,
   bool barrierDismissible = true,
-  Color barrierColor,
+  required Color barrierColor,
   @Deprecated(
       'Instead of using the "child" argument, return the child from a closure '
       'provided to the "builder" argument. This will ensure that the BuildContext '
       'is appropriate for widgets built in the dialog.')
-      Widget child,
-  WidgetBuilder builder,
+      Widget? child,
+  WidgetBuilder? builder,
 }) {
   assert(child == null || builder == null);
   assert(debugCheckHasMaterialLocalizations(context));
 
-  final ThemeData theme = Theme.of(context);
+  final ThemeData? theme = Theme.of(context);
   return showGeneralDialog(
     context: context,
     pageBuilder: (BuildContext buildContext, Animation<double> animation,
         Animation<double> secondaryAnimation) {
-      final Widget pageChild = child ?? Builder(builder: builder);
+      final Widget pageChild = child ?? Builder(builder: builder!);
       return SafeArea(
         child: Builder(builder: (BuildContext context) {
           return theme != null

@@ -1,10 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
 
-import 'package:loading_dialog/loading_dialog.dart';
-
-void main() {
-  BuildContext context = null;
+void main() {/*
+  BuildContext? context = null;
   LoadingDialog loadingDialog = LoadingDialog(
     buildContext: context,
     loadingView: null, //yourself loading view ,default is CircularProgressIndicator
@@ -21,5 +17,5 @@ void main() {
     backgroundColor: Colors.white, //dialog background color
     barrierColor: Colors.black54, //window color
     barrierDismissible: true, //touch window dismiss
-  );
+  );*/
 }

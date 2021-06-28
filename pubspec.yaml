@@ -1,11 +1,11 @@
 name: loading_dialog
 description: A flutter widget of loading dialog.Easy to use.
-version: 0.0.1+1
+version: 0.9.0+9
 author: tianyu704 <839629712@qq.com>
 homepage: https://github.com/tianyu704/loading_dialog
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: '>=2.13.0 <3.0.0'
 
 dependencies:
   flutter:
